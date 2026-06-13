@@ -71,13 +71,16 @@ if st.button("Detect News"):
         news_vector = vectorizer.transform([news])
 
         result = model.predict(news_vector)
+        probability = model.predict_proba(news_vector)
+        confidence = round(max(probability[0])*100,2)
 
         if result[0] == "FAKE":
-            st.error("❌ FAKE NEWS DETECTED")
+            st.error(f"❌ FAKE NEWS DETECTED\n\nConfidence: {confidence}%")
 
         else:
-            st.success("✅ REAL NEWS DETECTED")
+            st.success(f"✅ REAL NEWS DETECTED\n\nConfidence: {confidence}%")
 
 # Footer
 st.write("---")
+st.info("This is a machine learning prototype trained on sample news data. Results are predictions and not factual verfication.")
 st.write("Made using AI, Machine Learning & Streamlit")
